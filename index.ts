@@ -11,11 +11,9 @@ function DOM() {
 
     // Selective dom element
     const element =
-      type.toLowerCase() === "text"
+      type === "TEXT"
         ? document.createTextNode(props.innerText)
         : document.createElement(type);
-
-    parentNode.appendChild(element);
 
     // Spread props
     Object.keys(props)
