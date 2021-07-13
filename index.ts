@@ -1,4 +1,3 @@
-// For further developments element id generator import uuid from "./uuid";
 /* 
   2021 - Dombul DOM Operator
   :gear: Still in development !!
@@ -9,10 +8,10 @@ function DOM() {
   function render(childNode, parentNode) {
     const { type, props } = childNode;
 
-    // Selective dom element
+    // Create DOM - Selective
     const element =
       type === "TEXT"
-        ? document.createTextNode(props.innerText)
+        ? document.createTextNode(props.nodeValue)
         : document.createElement(type);
 
     // Spread props
@@ -33,11 +32,8 @@ function DOM() {
       });
 
     // Append child elements
-    if (props.children) {
-      props.children.forEach((childElement) => {
-        render(childElement, element);
-      });
-    }
+    const childElements = props.children || [];
+    childElements.forEach((childElement) => render(childElement, element));
 
     // Append element to parent
     parentNode.appendChild(element);
@@ -51,8 +47,30 @@ function DOM() {
     return !isListener(prop) && prop !== "children";
   }
 
+  function createElement(type, settings, ...childNodes) {
+    const props = Object.assign({}, settings);
+    const children = childNodes.length > 0 ? [...childNodes] : [];
+
+    props.children = children
+      .filter(isChildNullorFalse)
+      .map((child) =>
+        child instanceof Object
+          ? child
+          : createElement("TEXT", { nodeValue: child })
+      );
+    return {
+      type,
+      props,
+    };
+  }
+
+  function isChildNullorFalse(child) {
+    return child != null && child !== false;
+  }
+
   return {
     render,
+    createElement,
   };
 }
 
