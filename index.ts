@@ -49,7 +49,7 @@ function DOM() {
 
   function createElement(type, settings, ...childNodes) {
     const props = Object.assign({}, settings);
-    const children = childNodes.length > 0 ? [...childNodes] : [];
+    const children = childNodes.length > 0 ? [].concat(...childNodes) : [];
 
     props.children = children
       .filter(isChildNullorFalse)

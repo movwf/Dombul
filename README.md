@@ -71,3 +71,4 @@ Install;
 - 1.0.0 - Simple DOM object rendering features initiated.
 - 1.1.0 - JSX rendering capabilities added.
 - 1.1.1 - README added.
+- 1.1.2 - Bugfix : Component mapping render failure.
